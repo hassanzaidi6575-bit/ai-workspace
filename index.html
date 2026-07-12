@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Workspace</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<!-- Markdown rendering + code highlighting via CDN, no npm needed -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body data-theme="dark">
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>AI Workspace</h1>
+      <button id="newChatBtn" class="btn-icon" title="New chat">+</button>
+    </div>
+
+    <div class="session-list" id="sessionList">
+      <!-- session items injected by JS -->
+    </div>
+
+    <div class="sidebar-footer">
+      <button id="exportBtn" class="btn-secondary">Export Chat</button>
+      <button id="darkModeToggle" class="btn-secondary">🌙 Toggle Theme</button>
+    </div>
+  </aside>
+
+  <!-- MAIN PANEL -->
+  <main class="main">
+
+    <!-- TOP BAR: model select + system prompt -->
+    <div class="topbar">
+      <div class="topbar-row">
+        <label for="modelSelect">Model</label>
+        <select id="modelSelect">
+          {% for m in models %}
+          <option value="{{ m.id }}">{{ m.label }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="systemPromptInput" class="system-label">System Prompt</label>
+        <input type="text" id="systemPromptInput" placeholder='e.g. "You are a professional software engineer."'>
+
+        <div class="stats" id="statsBar">
+          <span id="tokenStat">Tokens: 0</span>
+          <span id="timeStat">Time: 0s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMPT TEMPLATES -->
+    <div class="templates-bar" id="templatesBar">
+      <!-- template buttons injected by JS -->
+    </div>
+
+    <!-- CHAT WINDOW -->
+    <div class="chat-window" id="chatWindow">
+      <div class="empty-state" id="emptyState">
+        <p>👋 Start a conversation, pick a template, or set a system prompt above.</p>
+      </div>
+    </div>
+
+    <!-- ERROR BANNER -->
+    <div class="error-banner" id="errorBanner" style="display:none;"></div>
+
+    <!-- INPUT BAR -->
+    <div class="input-bar">
+      <textarea id="messageInput" placeholder="Ask anything..." rows="2"></textarea>
+      <button id="sendBtn" class="btn-primary">Send</button>
+    </div>
+
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/markdown.js') }}"></script>
+<script src="{{ url_for('static', filename='js/templates.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sessions.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
